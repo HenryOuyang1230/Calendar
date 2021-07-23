@@ -14,7 +14,7 @@ public class CalendarDemo {
                 new Time(0, 30), "Reminder for My Event");
         reminderForEvent.setRepeating(true); // this reminder is repeating
         reminderForEvent.setInterval("This is the interval of Reminder for My Event.");
-        reminderForEvent.setNote("This is the reinder for My Event.");
+        reminderForEvent.setNote("This is the reminder for My Event.");
         System.out.println("Done.");
 
         System.out.println("Setting up reminders (2/2)...");
