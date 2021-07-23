@@ -1,5 +1,5 @@
 package exception;
 
-public class EntryNotFound {
+public class EntryNotFound extends RuntimeException{
 
 }

@@ -1,5 +1,5 @@
 package exception;
 
-public class AttendeeNotFound {
+public class AttendeeNotFound extends RuntimeException{
     
 }
