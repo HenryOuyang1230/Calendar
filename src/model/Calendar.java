@@ -46,10 +46,11 @@ public class Calendar {
     }
 
     // EFFECTS: returns list of all meetings
-    public List<Entry> getMeetings() {
+    public List<Meeting> getMeetings() {
         return null; // stub
     }
 
+    // REQUIRES: an entry with label is already in this.entries
     // EFFECTS: returns entry with given label
     public Entry getEntry(String label) {
         return null; // stub
