@@ -24,7 +24,7 @@ public class Meeting extends Event {
     // MODIFIES: this
     // EFFECTS: if attendee is not in this.attendees, adds it to this.attendees;
     //          otherwise, throws AttendeeAlreadyExists
-    public void addAttendees(String attendee) {
+    public void addAttendee(String attendee) {
         if (attendees.contains(attendee)) {
             throw new AttendeeAlreadyExists();
         }

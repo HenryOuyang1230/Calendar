@@ -29,8 +29,8 @@ public class CalendarDemo {
                 new Time(6, 30), "My Meeting");
         myMeeting.setRepeating(false); // this meeting is NOT repeating
         myMeeting.setReminder(reminderForMeeting);
-        myMeeting.addAttendees("attendee1@example.com");
-        myMeeting.addAttendees("attendee2@example.com");
+        myMeeting.addAttendee("attendee1@example.com");
+        myMeeting.addAttendee("attendee2@example.com");
 
         // setting up calendar
         Calendar myCalendar = new Calendar(new Date(7, 22, 2021),

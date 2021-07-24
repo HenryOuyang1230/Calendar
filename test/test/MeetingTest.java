@@ -28,19 +28,19 @@ public class MeetingTest extends EventTest {
     }
 
     @Test
-    public void testAddRemoveAttendees() {
+    public void testAddRemoveAttendee() {
         assertEquals(testMeeting.getAttendees().size(), 0);
 
         try {
-            testMeeting.addAttendees("attendee1@test.org");
-            testMeeting.addAttendees("attendee2@test.org");
+            testMeeting.addAttendee("attendee1@test.org");
+            testMeeting.addAttendee("attendee2@test.org");
         } catch (AttendeeAlreadyExists e) {
             fail();
         }
         assertEquals(testMeeting.getAttendees().size(), 2);
 
         try {
-            testMeeting.addAttendees("attendee1@test.org");
+            testMeeting.addAttendee("attendee1@test.org");
             fail();
         } catch (AttendeeAlreadyExists e) {
 
@@ -66,7 +66,7 @@ public class MeetingTest extends EventTest {
     @Test
     public void testSendInvites() {
         assertFalse(testMeeting.sendInvites());
-        testMeeting.addAttendees("attendee1@test.org");
+        testMeeting.addAttendee("attendee1@test.org");
         assertTrue(testMeeting.sendInvites());
     }
 }
