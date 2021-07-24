@@ -1,5 +1,8 @@
 package model;
 
+import exception.EntryAlreadyExists;
+import exception.EntryNotFound;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,17 +34,24 @@ public class Calendar {
         return entries;
     }
 
-    // REQUIRES: entry is not in this.entries
+    // REQUIRES:
     // MODIFIES: this
-    // EFFECTS: adds entry to this.entries
+    // EFFECTS: if entry is not in this.entries, adds it to this.entries;
+    //          otherwise, throws EntryAlreadyExists
     public void addEntry(Entry entry) {
+        if (entries.contains(entry)) {
+            throw new EntryAlreadyExists();
+        }
         entries.add(entry);
     }
 
-    // REQUIRES: entry is already in this.entries
     // MODIFIES: this
-    // EFFECTS: removes entry from this.entries
+    // EFFECTS: if entry is in this.entries, removes it from this.entries;
+    //          otherwise, throws EntryNotFound and continues
     public void removeEntry(Entry entry) {
+        if (!entries.contains(entry)) {
+            throw new EntryNotFound();
+        }
         entries.remove(entry);
     }
 
@@ -56,15 +66,15 @@ public class Calendar {
         return meetings;
     }
 
-    // REQUIRES: an entry with label is already in this.entries
-    // EFFECTS: returns entry with given label
+    // EFFECTS: if an entry with label is in this.entries, returns it;
+    //          otherwise, throws EntryNotFound
     public Entry getEntry(String label) {
         for (Entry e : entries) {
             if (e.getLabel().equals(label)) {
                 return e;
             }
         }
-        return null;
+        throw new EntryNotFound();
     }
 
     // EFFECTS: prints out dates, times, labels, whether repeating of all entries

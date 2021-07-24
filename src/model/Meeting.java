@@ -1,5 +1,8 @@
 package model;
 
+import exception.AttendeeAlreadyExists;
+import exception.AttendeeNotFound;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +21,23 @@ public class Meeting extends Event {
         return attendees;
     }
 
-    // REQUIRES: attendee is not in this.attendees
     // MODIFIES: this
-    // EFFECTS: adds attendee to this.attendees
+    // EFFECTS: if attendee is not in this.attendees, adds it to this.attendees;
+    //          otherwise, throws AttendeeAlreadyExists
     public void addAttendees(String attendee) {
+        if (attendees.contains(attendee)) {
+            throw new AttendeeAlreadyExists();
+        }
         attendees.add(attendee);
     }
 
-    // REQUIRES: attendee is already in this.attendees
     // MODIFIES: this
-    // EFFECTS: removes attendee from this.attendees
+    // EFFECTS: if attendee is already in this.attendees, removes it from this.attendees
+    //          otherwise, throws AttendeeNotFound
     public void removeAttendee(String attendee) {
+        if (!attendees.contains(attendee)) {
+            throw new AttendeeNotFound();
+        }
         attendees.remove(attendee);
     }
 
