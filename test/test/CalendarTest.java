@@ -1,5 +1,7 @@
 package test;
 
+import exception.EntryAlreadyExists;
+import exception.EntryNotFound;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,15 +42,41 @@ public class CalendarTest {
     public void testAddRemoveEntry() {
         assertEquals(testCalendar.getEntries().size(), 0);
 
-        testCalendar.addEntry(testEvent);
-        testCalendar.addEntry(testMeeting);
-
+        try {
+            testCalendar.addEntry(testEvent);
+            testCalendar.addEntry(testMeeting);
+        } catch (EntryAlreadyExists e) {
+            fail();
+        }
         assertEquals(testCalendar.getEntries().size(), 2);
         assertTrue(testCalendar.getEntries().contains(testEvent));
         assertTrue(testCalendar.getEntries().contains(testMeeting));
 
-        testCalendar.removeEntry(testMeeting);
+        try {
+            testCalendar.addEntry(testEvent);
+            fail();
+        } catch (EntryAlreadyExists e) {
 
+        }
+        assertEquals(testCalendar.getEntries().size(), 2);
+        assertTrue(testCalendar.getEntries().contains(testEvent));
+        assertTrue(testCalendar.getEntries().contains(testMeeting));
+
+        try {
+            testCalendar.removeEntry(new Event(testDate, testTime, "Non-existed event"));
+            fail();
+        } catch (EntryNotFound e) {
+
+        }
+        assertEquals(testCalendar.getEntries().size(), 2);
+        assertTrue(testCalendar.getEntries().contains(testEvent));
+        assertTrue(testCalendar.getEntries().contains(testMeeting));
+
+        try {
+            testCalendar.removeEntry(testMeeting);
+        } catch (EntryNotFound e) {
+            fail();
+        }
         assertEquals(testCalendar.getEntries().size(), 1);
         assertTrue(testCalendar.getEntries().contains(testEvent));
         assertFalse(testCalendar.getEntries().contains(testMeeting));
@@ -74,11 +102,22 @@ public class CalendarTest {
         testCalendar.addEntry(testEvent);
         testCalendar.addEntry(testMeeting);
         testCalendar.addEntry(testReminder);
-
         assertEquals(testCalendar.getEntries().size(), 3);
-        assertSame(testCalendar.getEntry("Reminder"), testReminder);
-        assertSame(testCalendar.getEntry("Event"), testEvent);
-        assertSame(testCalendar.getEntry("Meeting with Reminder"), testMeeting);
+
+        try {
+            assertSame(testCalendar.getEntry("Reminder"), testReminder);
+            assertSame(testCalendar.getEntry("Event"), testEvent);
+            assertSame(testCalendar.getEntry("Meeting with Reminder"), testMeeting);
+        } catch (EntryNotFound e) {
+            fail();
+        }
+
+        try {
+            testCalendar.getEntry("Non-existed Entry");
+            fail();
+        } catch (EntryNotFound e) {
+
+        }
     }
 
     @Test

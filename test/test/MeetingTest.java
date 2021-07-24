@@ -1,5 +1,7 @@
 package test;
 
+import exception.AttendeeAlreadyExists;
+import exception.AttendeeNotFound;
 import model.Meeting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,10 +30,36 @@ public class MeetingTest extends EventTest {
     @Test
     public void testAddRemoveAttendees() {
         assertEquals(testMeeting.getAttendees().size(), 0);
-        testMeeting.addAttendees("attendee1@test.org");
-        testMeeting.addAttendees("attendee2@test.org");
+
+        try {
+            testMeeting.addAttendees("attendee1@test.org");
+            testMeeting.addAttendees("attendee2@test.org");
+        } catch (AttendeeAlreadyExists e) {
+            fail();
+        }
         assertEquals(testMeeting.getAttendees().size(), 2);
-        testMeeting.removeAttendee("attendee2@test.org");
+
+        try {
+            testMeeting.addAttendees("attendee1@test.org");
+            fail();
+        } catch (AttendeeAlreadyExists e) {
+
+        }
+        assertEquals(testMeeting.getAttendees().size(), 2);
+
+        try {
+            testMeeting.removeAttendee("attendee3@test.org");
+            fail();
+        } catch (AttendeeNotFound e) {
+
+        }
+        assertEquals(testMeeting.getAttendees().size(), 2);
+
+        try {
+            testMeeting.removeAttendee("attendee2@test.org");
+        } catch (AttendeeNotFound e) {
+            fail();
+        }
         assertEquals(testMeeting.getAttendees().size(), 1);
     }
 
